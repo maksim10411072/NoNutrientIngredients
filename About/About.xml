@@ -77,7 +77,10 @@
       </li>
     </v1.6>
   </modDependenciesByVersion>
-  <loadAfter/>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+    <li>vanillaexpanded.vnutriente</li>
+  </loadAfter>
   <loadAfterByVersion>
     <v1.0>
       <li>brrainz.harmony</li>

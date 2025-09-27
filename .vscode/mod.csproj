@@ -108,35 +108,38 @@
                     </li>
                 </v1.6>
             </modDependenciesByVersion>
-            <loadAfter />
+            <loadAfter>
+                <li>brrainz.harmony</li>
+                <li>vanillaexpanded.vnutriente</li>
+            </loadAfter>
             <loadAfterByVersion>
                 <v1.0>
                     <li>brrainz.harmony</li>
-                    <li>VanillaExpanded.VNutrientE</li>
+                    <li>vanillaexpanded.vnutriente</li>
                 </v1.0>
                 <v1.1>
                     <li>brrainz.harmony</li>
-                    <li>VanillaExpanded.VNutrientE</li>
+                    <li>vanillaexpanded.vnutriente</li>
                 </v1.1>
                 <v1.2>
                     <li>brrainz.harmony</li>
-                    <li>VanillaExpanded.VNutrientE</li>
+                    <li>vanillaexpanded.vnutriente</li>
                 </v1.2>
                 <v1.3>
                     <li>brrainz.harmony</li>
-                    <li>VanillaExpanded.VNutrientE</li>
+                    <li>vanillaexpanded.vnutriente</li>
                 </v1.3>
                 <v1.4>
                     <li>brrainz.harmony</li>
-                    <li>VanillaExpanded.VNutrientE</li>
+                    <li>vanillaexpanded.vnutriente</li>
                 </v1.4>
                 <v1.5>
                     <li>brrainz.harmony</li>
-                    <li>VanillaExpanded.VNutrientE</li>
+                    <li>vanillaexpanded.vnutriente</li>
                 </v1.5>
                 <v1.6>
                     <li>brrainz.harmony</li>
-                    <li>VanillaExpanded.VNutrientE</li>
+                    <li>vanillaexpanded.vnutriente</li>
                 </v1.6>
             </loadAfterByVersion>
             <forceLoadAfter />
