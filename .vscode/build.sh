@@ -9,10 +9,10 @@ configuration=${1:-Debug}
 
 # build dll
 echo "Building for RimWorld 1.5"
-rm -f $mod_dir/1.5/Assemblies/BetterAutocastVPE.dll
+rm -f $mod_dir/1.5/Assemblies/NoNutrientIngredients.dll
 dotnet build $script_dir/mod.csproj -c ${configuration} -p:GAME_VERSION=v1.5
 echo "Building for RimWorld 1.6"
-rm -f $mod_dir/1.6/Assemblies/BetterAutocastVPE.dll
+rm -f $mod_dir/1.6/Assemblies/NoNutrientIngredients.dll
 dotnet build $script_dir/mod.csproj -c ${configuration} -p:GAME_VERSION=v1.6
 
 # generate About.xml

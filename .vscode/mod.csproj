@@ -33,6 +33,7 @@
             <name>No Nutrient Paste Ingredients</name>
             <authors>
                 <li>Toby</li>
+                <li>Maksimka10411072</li>
             </authors>
             <description>Remove ingredients from meals produced by Nutrient Paste Dispensers.</description>
             <supportedVersions>
@@ -111,24 +112,31 @@
             <loadAfterByVersion>
                 <v1.0>
                     <li>brrainz.harmony</li>
+                    <li>VanillaExpanded.VNutrientE</li>
                 </v1.0>
                 <v1.1>
                     <li>brrainz.harmony</li>
+                    <li>VanillaExpanded.VNutrientE</li>
                 </v1.1>
                 <v1.2>
                     <li>brrainz.harmony</li>
+                    <li>VanillaExpanded.VNutrientE</li>
                 </v1.2>
                 <v1.3>
                     <li>brrainz.harmony</li>
+                    <li>VanillaExpanded.VNutrientE</li>
                 </v1.3>
                 <v1.4>
                     <li>brrainz.harmony</li>
+                    <li>VanillaExpanded.VNutrientE</li>
                 </v1.4>
                 <v1.5>
                     <li>brrainz.harmony</li>
+                    <li>VanillaExpanded.VNutrientE</li>
                 </v1.5>
                 <v1.6>
                     <li>brrainz.harmony</li>
+                    <li>VanillaExpanded.VNutrientE</li>
                 </v1.6>
             </loadAfterByVersion>
             <forceLoadAfter />
@@ -141,7 +149,7 @@
     </PropertyGroup>
     <ItemGroup Condition="'$(GAME_VERSION)'==''">
         <!-- <PackageReference Include="Krafs.Rimworld.Ref" Version="1.6.4518" /> -->
-        <Reference Include="RimWorld" HintPath="/home/toby/.local/share/Steam/steamapps/common/RimWorld/RimWorldLinux_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" />
+        <Reference Include="RimWorld" HintPath="../../../RimWorld*_Data/Managed/Assembly-CSharp.dll" IncludeAssets="compile" Private="false" />
         <PackageReference Include="Lib.Harmony" Version="2.3.6" IncludeAssets="compile" />
     </ItemGroup>
     <ItemGroup Condition="'$(GAME_VERSION)'=='v1.5'">

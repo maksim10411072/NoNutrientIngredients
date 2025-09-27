@@ -1,4 +1,8 @@
+using System;
+using System.Collections.Generic;
+
 using System.Reflection;
+using System.Reflection.Emit;
 
 using RimWorld;
 
@@ -30,10 +34,22 @@ public static class NoNutrientIngredients
         const string BUILD = "Release";
 #endif
         Log.Message(
-            $"Running Version {Assembly.GetAssembly(typeof(NoNutrientIngredients)).GetName().Version} {BUILD} compiled for RimWorld version {GAME_VERSION}"
+            $"[NoNutrientIngredients] Running Version {Assembly.GetAssembly(typeof(NoNutrientIngredients)).GetName().Version} {BUILD} compiled for RimWorld version {GAME_VERSION}"
                 + BUILD
         );
-        new HarmonyLib.Harmony("dev.tobot.rimworld.nonutrientingredients").PatchAll();
+        HarmonyLib.Harmony harmony = new HarmonyLib.Harmony("dev.tobot.rimworld.nonutrientingredients");
+        if (BUILD == "Debug")
+        {
+            HarmonyLib.Harmony.DEBUG = true;
+        }
+        harmony.PatchAll();
+        // get VNPE.Building_NutrientGrinder.TryProducePaste if present
+        Type grinderType = Type.GetType("VNPE.Building_NutrientGrinder, VNPE");
+        if (grinderType != null)
+        {
+            Log.Message("VNPE Detected, applying patch");
+            harmony.Patch(grinderType.GetMethod("TryProducePaste", BindingFlags.NonPublic | BindingFlags.Instance), transpiler: new HarmonyLib.HarmonyMethod(typeof(NoNutrientIngredients), nameof(VNPE_Grinder_TryProducePastePatch)));
+        }
     }
 
     [HarmonyLib.HarmonyPatch(
@@ -44,4 +60,27 @@ public static class NoNutrientIngredients
     {
         public static void Postfix(ref Thing __result) => __result.TryGetComp<CompIngredients>()?.ingredients.Clear();
     }
+    // Patch Building_NutrientGrinder.TryProducePaste to clear ingredients instead
+    public static IEnumerable<HarmonyLib.CodeInstruction> VNPE_Grinder_TryProducePastePatch(IEnumerable<HarmonyLib.CodeInstruction> instructions)
+        {
+            HarmonyLib.CodeMatcher codeMatcher = new HarmonyLib.CodeMatcher(instructions);
+            _ = codeMatcher.MatchStartForward(new HarmonyLib.CodeMatch(new HarmonyLib.CodeInstruction(
+                OpCodes.Callvirt,
+                HarmonyLib.AccessTools.Method(typeof(CompIngredients), "RegisterIngredient")
+            )))
+            .Advance(-2)
+            .RemoveInstructions(3)
+            .Insert(
+                new HarmonyLib.CodeInstruction(
+                    OpCodes.Ldfld,
+                    HarmonyLib.AccessTools.Field(typeof(CompIngredients), "ingredients")
+                ),
+                new HarmonyLib.CodeInstruction(
+                    OpCodes.Callvirt,
+                    HarmonyLib.AccessTools.Method(typeof(List<ThingDef>), "Clear")
+                )
+            );
+
+            return codeMatcher.Instructions();
+        }
 }
