@@ -38,16 +38,15 @@ public static class NoNutrientIngredients
                 + BUILD
         );
         HarmonyLib.Harmony harmony = new HarmonyLib.Harmony("dev.tobot.rimworld.nonutrientingredients");
-        if (BUILD == "Debug")
-        {
-            HarmonyLib.Harmony.DEBUG = true;
-        }
+#if DEBUG
+        HarmonyLib.Harmony.DEBUG = true;
+#endif
         harmony.PatchAll();
         // get VNPE.Building_NutrientGrinder.TryProducePaste if present
         Type grinderType = Type.GetType("VNPE.Building_NutrientGrinder, VNPE");
         if (grinderType != null)
         {
-            Log.Message("VNPE Detected, applying patch");
+            Log.Message("[NoNutrientIngredients] VNPE Detected, applying patch");
             harmony.Patch(grinderType.GetMethod("TryProducePaste", BindingFlags.NonPublic | BindingFlags.Instance), transpiler: new HarmonyLib.HarmonyMethod(typeof(NoNutrientIngredients), nameof(VNPE_Grinder_TryProducePastePatch)));
         }
     }
@@ -60,7 +59,10 @@ public static class NoNutrientIngredients
     {
         public static void Postfix(ref Thing __result) => __result.TryGetComp<CompIngredients>()?.ingredients.Clear();
     }
-    // Patch Building_NutrientGrinder.TryProducePaste to clear ingredients instead
+
+    /// <summary>
+    /// Harmony Transpiler Patch for Building_NutrientGrinder.TryProducePaste to clear ingredients instead
+    /// </summary>
     public static IEnumerable<HarmonyLib.CodeInstruction> VNPE_Grinder_TryProducePastePatch(IEnumerable<HarmonyLib.CodeInstruction> instructions)
         {
             HarmonyLib.CodeMatcher codeMatcher = new HarmonyLib.CodeMatcher(instructions);
